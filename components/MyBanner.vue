@@ -30,6 +30,7 @@
 			$(function() {
 				$('#sucaihuo').easyFader();
 			});
+			debugger;
 			this.$http.get('/data').then((response)=>{
 				console.log(response);
 			})

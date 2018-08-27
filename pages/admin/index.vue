@@ -30,6 +30,7 @@
 		mounted(){
 			let height=document.documentElement.clientHeight;
 			this.$refs.wrap.style.height=height+"px";
+			
 		},
 		methods:{
 			tabchange(tabName){
