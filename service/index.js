@@ -1,24 +1,29 @@
 // env
-const isProdMode = Object.is(process.env.NODE_ENV, 'production')
+const isProdMode = Object.is(process.env.NODE_ENV, 'production');
 const express=require('express');
 const router=require('./router');
-const { Nuxt, Builder } = require('nuxt')
-const host = !isProdMode ? '0.0.0.0' : (process.env.HOST || '127.0.0.1')
-const port = process.env.PORT || 3000
+const { Nuxt, Builder } = require('nuxt');
+const host = !isProdMode ? '0.0.0.0' : (process.env.HOST || '127.0.0.1');
+const port = process.env.PORT || 3000;
 process.noDeprecation = true
 // Import and Set Nuxt.js options
 const config = require('../nuxt.config');
-config.dev = !isProdMode
+config.dev = !isProdMode;
 
-let createError=require('http-errors');
-
+global.console.warn = function() {
+  if (arguments && arguments[0].toString().includes('context.isServer') ||
+      arguments && arguments[0].toString().includes('context.isClient')) {
+    return false
+  } else {
+    consolewarn.apply(consolewarn, arguments)
+  }
+}
 
 let app=express();
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 const server = require('http').Server(app);
 app.set('port', port);
-
 const nuxt = new Nuxt(config);
 app.use('/data',router);
 app.use(nuxt.render);
